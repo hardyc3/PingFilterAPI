@@ -20,6 +20,7 @@
     <jooq.version>3.21.9</jooq.version>
     <db.url>jdbc:h2:/data/pingfilterdb</db.url>
     <db.username>pingfilterdbuser</db.username>
+    <skip.jooq.generation>true</skip.jooq.generation>
   </properties>
 
   <dependencyManagement>
@@ -213,13 +214,15 @@
 
         <executions>
           <execution>
-           <goals>
+            <phase>generate-sources</phase>
+            <goals>
               <goal>generate</goal>
             </goals>
           </execution>
         </executions>
 
         <configuration>
+          <skip>${skip.jooq.generation}</skip>
           <jdbc>
             <url>${db.url}</url>
             <user>${db.username}</user>
@@ -227,10 +230,9 @@
           <generator>
             <database>
               <includes>.*</includes>
-              <inputSchema>public</inputSchema>
+              <inputSchema>PUBLIC</inputSchema>
             </database>
             <target>
-              <packageName>com.hardycherry.flyway.db.h2</packageName>
               <directory>src/main/java/com/hardycherry/db/jooq</directory>
             </target>
           </generator>
