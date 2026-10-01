@@ -31,15 +31,19 @@ public class ResourcesDao {
         List<ResourceDto> results = new ArrayList<>();
         for(ResourcesRecord resourcesRecord : recordsAndData.keySet()) {
             List<ResourceDataRecord> resourceDataRecords = recordsAndData.get(resourcesRecord);
-            List<ResourceDataDto> dataDtos = new ArrayList<>();
+            Map<String, ResourceDataDto> keyMap = new HashMap<>();
+            Map<String, ResourceDataDto> valueMap = new HashMap<>();
             for(ResourceDataRecord dataRecord : resourceDataRecords) {
-                dataDtos.add(ResourceDataDto.builder()
+                ResourceDataDto dataDto = ResourceDataDto.builder()
                         .id(dataRecord.getId())
                         .key(dataRecord.getResourceKey())
                         .value(dataRecord.getResourceValue())
                         .created(dataRecord.getCreated())
                         .deleted(dataRecord.getDeleted())
-                        .build());
+                        .build();
+
+                keyMap.put(dataRecord.getResourceKey(), dataDto);
+                valueMap.put(dataRecord.getResourceValue(), dataDto);
             }
 
             results.add(ResourceDto.builder()
@@ -47,7 +51,8 @@ public class ResourcesDao {
                     .name(resourcesRecord.getName())
                     .created(resourcesRecord.getCreated())
                     .deleted(resourcesRecord.getDeleted())
-                    .resourceDataList(dataDtos)
+                    .keyMap(keyMap)
+                    .valueMap(valueMap)
                     .build());
         }
         return results;
