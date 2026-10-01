@@ -1,5 +1,3 @@
-
-
 INSERT INTO resources (id, name) VALUES
     (1, 'Person1'),
     (2, 'Person2'),

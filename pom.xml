@@ -233,7 +233,8 @@
               <inputSchema>PUBLIC</inputSchema>
             </database>
             <target>
-              <directory>src/main/java/com/hardycherry/db/jooq</directory>
+              <packageName>com.hardycherry.generated</packageName>
+              <directory>src/main/java</directory>
             </target>
           </generator>
         </configuration>
