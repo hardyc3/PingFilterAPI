@@ -1,6 +1,8 @@
 package com.hardycherry.controllers;
 
 import com.hardycherry.dao.ResourcesDao;
+import com.hardycherry.exception.FilterOperationException;
+import com.hardycherry.exception.FilterParsingException;
 import com.hardycherry.model.ResourceDto;
 import com.hardycherry.service.ResourcesService;
 import jakarta.ws.rs.client.Entity;
@@ -28,19 +30,24 @@ public class ResourcesController {
 
     /**
      *
-     * @param filter
-     * @return greeting text
+     * @param filterJsonStr
+     * @return resource list that matches filter json
      */
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public Object retrieveResources(@RequestParam String filter) {
-        log.info("Using the filter to find matching resources, filter=" + filter);
+    public Object retrieveResources(@RequestParam String filterJsonStr) {
+        log.info("Using the filter to find matching resources, filterJsonStr=" + filterJsonStr);
 
-        List<ResourceDto> resourceDtoList = resourcesService.getResourcesWithFilter(filter);
-        if(resourceDtoList.isEmpty()) {
-            return ErrorResponse.builder(null, HttpStatus.BAD_REQUEST, "No resources found with supplied filter");
-        } else {
-            return resourceDtoList;
+        try {
+            List<ResourceDto> resourceDtoList = resourcesService.getResourcesWithFilter(filterJsonStr);
+            if (resourceDtoList.isEmpty()) {
+                return ErrorResponse.builder(null, HttpStatus.BAD_REQUEST, "No resources found with supplied filter");
+            } else {
+                return resourceDtoList;
+            }
+        } catch(FilterParsingException | FilterOperationException e) {
+            log.error("Error parsing filterJsonStr");
+            return ErrorResponse.builder(e, HttpStatus.BAD_REQUEST, "Unable to parse json filter");
         }
     }
 }

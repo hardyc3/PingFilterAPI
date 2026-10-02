@@ -11,7 +11,7 @@ import java.util.Map;
 public class ResourceDataDto {
     private Integer id;
     private String key;
-    private String value;
+    private Object value;
     private LocalDateTime created;
     private LocalDateTime deleted;
 }
