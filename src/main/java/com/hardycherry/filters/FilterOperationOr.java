@@ -3,15 +3,15 @@ package com.hardycherry.filters;
 import com.hardycherry.exception.FilterOperationException;
 import com.hardycherry.model.ResourceDto;
 
-public class FilterOperationOr extends FilterOperation<Filter, Filter> {
+public class FilterOperationOr<V> extends FilterOperation<Filter<?, ?, String, V>, Filter<?, ?, String, V>, String, V> {
 
-    public FilterOperationOr(Filter right, Filter left) {
+    public FilterOperationOr(Filter<?, ?, String, V> right, Filter<?, ?, String, V> left) {
         rightHandSide = right;
         leftHandSide = left;
     }
 
     @Override
-    public boolean evaluateResource(ResourceDto<String, ?> resource) throws FilterOperationException {
+    public boolean evaluateResource(ResourceDto<String, V> resource) throws FilterOperationException {
         if(resource == null) {
             throw new FilterOperationException("Resource can't be null");
         }

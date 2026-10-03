@@ -14,8 +14,10 @@ public class FilterOperationFalseTest extends BaseFilterOperationTest<String, Ob
         Assertions.assertTrue(isFalse.evaluateResource(buildResource(Map.of("key1", "false"))));
         Assertions.assertTrue(isFalse.evaluateResource(buildResource(Map.of("key1", "FALSE"))));
         Assertions.assertTrue(isFalse.evaluateResource(buildResource(Map.of("key1", "False"))));
+        Assertions.assertTrue(isFalse.evaluateResource(buildResource(Map.of("key1", false))));
         Assertions.assertFalse(isFalse.evaluateResource(buildResource(Map.of("key1", "value1"))));
         Assertions.assertFalse(isFalse.evaluateResource(buildResource(Map.of("key1", "true"))));
+        Assertions.assertFalse(isFalse.evaluateResource(buildResource(Map.of("key1", new Object()))));
         Assertions.assertFalse(isFalse.evaluateResource(buildResource(Map.of("key1", "value1", "key3", "value3"))));
         Assertions.assertThrows(FilterOperationException.class, () -> isFalse.evaluateResource(buildResource(Map.of("key5", "value5", "key6", "value6"))));
         Assertions.assertThrows(FilterOperationException.class, () -> isFalse.evaluateResource(buildResource(Map.of())));

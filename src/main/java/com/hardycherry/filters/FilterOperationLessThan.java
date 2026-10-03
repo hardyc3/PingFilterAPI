@@ -3,7 +3,7 @@ package com.hardycherry.filters;
 import com.hardycherry.exception.FilterOperationException;
 import com.hardycherry.model.ResourceDto;
 
-public class FilterOperationLessThan extends FilterOperation<String, String> {
+public class FilterOperationLessThan<V> extends FilterOperation<String, String, String, V> {
 
     public FilterOperationLessThan(String right, String left) {
         rightHandSide = right;
@@ -11,7 +11,7 @@ public class FilterOperationLessThan extends FilterOperation<String, String> {
     }
 
     @Override
-    public boolean evaluateResource(ResourceDto<String, ?> resource) throws FilterOperationException {
+    public boolean evaluateResource(ResourceDto<String, V> resource) throws FilterOperationException {
         if(resource == null || resource.findKey(rightHandSide) == null || resource.findKey(leftHandSide) == null) {
             throw new FilterOperationException("Resource can't be null");
         }

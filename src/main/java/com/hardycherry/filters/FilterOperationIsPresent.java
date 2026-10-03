@@ -3,14 +3,14 @@ package com.hardycherry.filters;
 import com.hardycherry.exception.FilterOperationException;
 import com.hardycherry.model.ResourceDto;
 
-public class FilterOperationIsPresent extends FilterOperation<String, Void> {
+public class FilterOperationIsPresent<V> extends FilterOperation<String, Void, String, V> {
 
     public FilterOperationIsPresent(String right) {
         rightHandSide = right;
     }
 
     @Override
-    public boolean evaluateResource(ResourceDto<String, ?> resource) throws FilterOperationException {
+    public boolean evaluateResource(ResourceDto<String, V> resource) throws FilterOperationException {
         if(resource == null) {
             throw new FilterOperationException("Resource can't be null");
         }

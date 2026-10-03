@@ -6,7 +6,7 @@ import com.hardycherry.model.ResourceDto;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FilterOperationRegex extends FilterOperation<String, String> {
+public class FilterOperationRegex<V> extends FilterOperation<String, String, String, V> {
 
     public FilterOperationRegex(String right, String left) {
         rightHandSide = right;
@@ -14,7 +14,7 @@ public class FilterOperationRegex extends FilterOperation<String, String> {
     }
 
     @Override
-    public boolean evaluateResource(ResourceDto<String, ?> resource) throws FilterOperationException {
+    public boolean evaluateResource(ResourceDto<String, V> resource) throws FilterOperationException {
 
         if(resource == null || resource.findKey(rightHandSide) == null || leftHandSide == null) {
             throw new FilterOperationException("Resource and parameters can't be null");
