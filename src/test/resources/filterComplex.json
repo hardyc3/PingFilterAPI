@@ -1,0 +1,24 @@
+{
+  "filters": [
+    {
+      "type": "and",
+      "list": [
+        {
+          "type": "equal",
+          "key": "user",
+          "value": "fred"
+        },
+        {
+          "type": "equal",
+          "key": "age",
+          "value": "33"
+        },
+        {
+          "type": "equal",
+          "key": "role",
+          "value": "admin"
+        }
+      ]
+    }
+  ]
+}

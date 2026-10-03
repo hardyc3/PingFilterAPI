@@ -22,4 +22,9 @@ public class FilterOperationEquals<L, V> extends FilterOperation<String, L, Stri
 
         return resource.findKey(rightHandSide).getValue().equals(leftHandSide);
     }
+
+    @Override
+    public String toString() {
+        return rightHandSide.toString() + "=" + leftHandSide.toString();
+    }
 }

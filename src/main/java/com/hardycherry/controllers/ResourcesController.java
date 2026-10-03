@@ -30,9 +30,9 @@ public class ResourcesController {
      * @param filterJsonStr
      * @return resource list that matches filter json
      */
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public Object retrieveResources(@RequestParam String filterJsonStr) {
+    public Object retrieveResources(@RequestBody String filterJsonStr) {
         log.info("Using the filter to find matching resources, filterJsonStr=" + filterJsonStr);
 
         try {

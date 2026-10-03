@@ -23,4 +23,9 @@ public class FilterOperationLessThan<V> extends FilterOperation<String, String, 
 
         return rhs < lhs;
     }
+
+    @Override
+    public String toString() {
+        return rightHandSide.toString() + " < " + leftHandSide.toString();
+    }
 }

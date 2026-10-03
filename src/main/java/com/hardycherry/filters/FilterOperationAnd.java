@@ -18,4 +18,9 @@ public class FilterOperationAnd<K, V> extends FilterOperation<Filter, Filter, K,
 
         return rightHandSide.matches(resource) && leftHandSide.matches(resource);
     }
+
+    @Override
+    public String toString() {
+        return "((" + rightHandSide.toString() + ") AND (" + leftHandSide.toString() + "))";
+    }
 }

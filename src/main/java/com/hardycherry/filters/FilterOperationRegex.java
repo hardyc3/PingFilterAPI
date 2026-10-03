@@ -30,4 +30,9 @@ public class FilterOperationRegex<V> extends FilterOperation<String, String, Str
             throw new FilterOperationException("resource value is not a string and can't have a regex applied to it");
         }
     }
+
+    @Override
+    public String toString() {
+        return rightHandSide.toString() + " ~= " + leftHandSide.toString();
+    }
 }

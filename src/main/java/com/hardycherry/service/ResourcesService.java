@@ -19,6 +19,9 @@ import java.util.List;
 public class ResourcesService {
 
     @Autowired
+    private FilterParser parser;
+
+    @Autowired
     private ResourcesDao resourcesDao;
 
     public List<ResourceDto<String, ?>> getResourcesWithFilter(String filterJsonStr) throws FilterParsingException, FilterOperationException {
@@ -30,7 +33,7 @@ public class ResourcesService {
             return Collections.emptyList();
         }
 
-        Filter filter = FilterParser.parse(filterJsonStr);
+        Filter filter = parser.parse(filterJsonStr);
         List<ResourceDto<String, ? super Object>> resourceDtoList = resourcesDao.getAllResources();
         return filter.filterResources(resourceDtoList);
     }

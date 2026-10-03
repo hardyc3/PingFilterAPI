@@ -16,4 +16,9 @@ public class FilterOperationNot<K, V> extends FilterOperation<Filter, Void, K, V
         }
         return !rightHandSide.matches(resource);
     }
+
+    @Override
+    public String toString() {
+        return "NOT (" + rightHandSide.toString() + ")";
+    }
 }

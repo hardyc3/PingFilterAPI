@@ -106,4 +106,16 @@ public class Filter<R, L, K, V> {
         }
         return results;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+
+        for(var operation : operations) {
+            builder.append(operation.toString())
+                    .append(System.lineSeparator());
+        }
+
+        return builder.substring(0, builder.length()-System.lineSeparator().length()).toString();
+    }
 }

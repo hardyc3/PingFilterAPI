@@ -21,4 +21,9 @@ public class FilterOperationIsPresent<V> extends FilterOperation<String, Void, S
             return false;
         }
     }
+
+    @Override
+    public String toString() {
+        return rightHandSide.toString() + " is present";
+    }
 }

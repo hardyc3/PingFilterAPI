@@ -18,4 +18,9 @@ public class FilterOperationOr<V> extends FilterOperation<Filter<?, ?, String, V
 
         return rightHandSide.matches(resource) || leftHandSide.matches(resource);
     }
+
+    @Override
+    public String toString() {
+        return "((" + rightHandSide.toString() + ") OR (" + leftHandSide.toString() + "))";
+    }
 }

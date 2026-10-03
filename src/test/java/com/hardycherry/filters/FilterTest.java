@@ -22,6 +22,7 @@ public class FilterTest extends BaseFilterOperationTest<String, Object> {
         Assertions.assertTrue(filter.matches(buildResource(Map.of("key1", "false", "key2", "value4", "key3", "value3"))));
         Assertions.assertFalse(filter.matches(buildResource(Map.of("key1", "true", "key2", "value4", "key3", "value3"))));
         Assertions.assertFalse(filter.matches(buildResource(Map.of("key1", "false", "key2", "value4", "key3", "value6"))));
+        Assertions.assertEquals("key1=false"+System.lineSeparator()+"((key2=value2) OR (key3=value3))", filter.toString());
     }
 
     @Test
@@ -35,6 +36,7 @@ public class FilterTest extends BaseFilterOperationTest<String, Object> {
         Assertions.assertFalse(filter.matches(buildResource(Map.of("key1", "true", "key2", "value", "key3", "value"))));
         Assertions.assertFalse(filter.matches(buildResource(Map.of("key1", "true", "key2", "value4", "key3", "value3"))));
         Assertions.assertFalse(filter.matches(buildResource(Map.of("key1", "false", "key2", "value4", "key3", "value6"))));
+        Assertions.assertEquals("key1=true"+System.lineSeparator()+"((key2=value2) AND (key3=value3))", filter.toString());
     }
 
     @Test
@@ -46,6 +48,7 @@ public class FilterTest extends BaseFilterOperationTest<String, Object> {
         Assertions.assertTrue(filter.matches(buildResource(Map.of("key1", "false"))));
         Assertions.assertFalse(filter.matches(buildResource(Map.of("key1", "true"))));
         Assertions.assertTrue(filter.matches(buildResource(Map.of("key1", new Object()))));
+        Assertions.assertEquals("NOT (key1=true)", filter.toString());
     }
 
     @Test
@@ -56,6 +59,7 @@ public class FilterTest extends BaseFilterOperationTest<String, Object> {
 
         Assertions.assertTrue(filter.matches(buildResource(Map.of("key1", "76", "key2", "4"))));
         Assertions.assertFalse(filter.matches(buildResource(Map.of("key1", "4", "key2", "54"))));
+        Assertions.assertEquals("key1 > key2", filter.toString());
     }
 
     @Test
@@ -66,6 +70,7 @@ public class FilterTest extends BaseFilterOperationTest<String, Object> {
 
         Assertions.assertTrue(filter.matches(buildResource(Map.of("key1", "4", "key2", "54"))));
         Assertions.assertFalse(filter.matches(buildResource(Map.of("key1", "76", "key2", "4"))));
+        Assertions.assertEquals("key1 < key2", filter.toString());
     }
 
     @Test
@@ -79,6 +84,7 @@ public class FilterTest extends BaseFilterOperationTest<String, Object> {
         Assertions.assertFalse(filter.matches(buildResource(Map.of("key1", "test"))));
         Assertions.assertThrows(FilterOperationException.class, () -> filter.matches(buildResource(Map.of())));
         Assertions.assertThrows(FilterOperationException.class, () -> filter.matches(null));
+        Assertions.assertEquals("key1 ~= value.*", filter.toString());
     }
 
     @Test
@@ -93,6 +99,7 @@ public class FilterTest extends BaseFilterOperationTest<String, Object> {
 
         Assertions.assertEquals(2, filter.filterResources(resources).size());
         Assertions.assertEquals(0, filter.filterResources(new ArrayList<>()).size());
+        Assertions.assertEquals("key1=false", filter.toString());
 
     }
 }

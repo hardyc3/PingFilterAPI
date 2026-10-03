@@ -24,4 +24,9 @@ public class FilterOperationTrue<V> extends FilterOperation<String, Void, String
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return rightHandSide.toString() + "=true";
+    }
 }
