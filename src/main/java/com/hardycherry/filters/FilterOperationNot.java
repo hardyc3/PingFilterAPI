@@ -10,7 +10,10 @@ public class FilterOperationNot extends FilterOperation<Filter, Void> {
     }
 
     @Override
-    public boolean evaluateResource(ResourceDto resource) throws FilterOperationException {
+    public boolean evaluateResource(ResourceDto<String, ?> resource) throws FilterOperationException {
+        if(resource == null) {
+            throw new FilterOperationException("Resource can't be null");
+        }
         return !rightHandSide.matches(resource);
     }
 }

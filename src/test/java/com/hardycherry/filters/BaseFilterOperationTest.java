@@ -7,15 +7,15 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BaseFilterOperationTest {
+public class BaseFilterOperationTest <K, V> {
 
-    public ResourceDto buildResource(Map<String, String> map) {
+    public ResourceDto<K, V> buildResource(Map<K, V> map) {
 
-        Map<String, ResourceDataDto> keyMap = new HashMap<>();
-        Map<String, ResourceDataDto> valueMap = new HashMap<>();
+        Map<K, ResourceDataDto<K, V>> keyMap = new HashMap<>();
+        Map<V, ResourceDataDto<K, V>> valueMap = new HashMap<>();
 
-        for(String key : map.keySet()) {
-            var dataDto = ResourceDataDto.builder()
+        for(K key : map.keySet()) {
+            var dataDto = ResourceDataDto.<K, V>builder()
                     .id(1)
                     .key(key)
                     .value(map.get(key))
@@ -25,7 +25,7 @@ public class BaseFilterOperationTest {
             valueMap.put(map.get(key), dataDto);
         }
 
-        return ResourceDto.builder()
+        return ResourceDto.<K, V>builder()
                 .name("test")
                 .created(LocalDateTime.now())
                 .keyMap(keyMap)

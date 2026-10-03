@@ -14,9 +14,12 @@ public class Filter {
         this.operations = operations;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
 
     public static class Builder {
-        protected List<FilterOperation<?, ?>> builderOperations;
+        private final List<FilterOperation<?, ?>> builderOperations;
 
         public Builder() {
             builderOperations = new ArrayList<>();
@@ -77,7 +80,7 @@ public class Filter {
         }
     }
 
-    public boolean matches(ResourceDto resourceDto) throws FilterOperationException {
+    public boolean matches(ResourceDto<String, ?> resourceDto) throws FilterOperationException {
         boolean result = true;
 
         for(FilterOperation<?, ?> operation : operations) {
@@ -90,13 +93,13 @@ public class Filter {
         return result;
     }
 
-    public List<ResourceDto> filterResources(List<ResourceDto> resources) throws FilterOperationException {
-        List<ResourceDto> results = new ArrayList<>();
+    public List<ResourceDto<String, ?>> filterResources(List<ResourceDto<String, ? super Object>> resources) throws FilterOperationException {
+        List<ResourceDto<String, ?>> results = new ArrayList<>();
         if(resources == null) {
             return results;
         }
 
-        for(ResourceDto resource : resources) {
+        for(ResourceDto<String, ?> resource : resources) {
             if(matches(resource)) {
                 results.add(resource);
             }

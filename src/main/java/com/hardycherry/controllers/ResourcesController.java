@@ -1,15 +1,12 @@
 package com.hardycherry.controllers;
 
-import com.hardycherry.dao.ResourcesDao;
 import com.hardycherry.exception.FilterOperationException;
 import com.hardycherry.exception.FilterParsingException;
 import com.hardycherry.model.ResourceDto;
 import com.hardycherry.service.ResourcesService;
-import jakarta.ws.rs.client.Entity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +36,7 @@ public class ResourcesController {
         log.info("Using the filter to find matching resources, filterJsonStr=" + filterJsonStr);
 
         try {
-            List<ResourceDto> resourceDtoList = resourcesService.getResourcesWithFilter(filterJsonStr);
+            List<ResourceDto<String, ?>> resourceDtoList = resourcesService.getResourcesWithFilter(filterJsonStr);
             if (resourceDtoList.isEmpty()) {
                 return ErrorResponse.builder(null, HttpStatus.BAD_REQUEST, "No resources found with supplied filter");
             } else {

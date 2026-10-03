@@ -11,9 +11,9 @@ public class FilterOperationAnd extends FilterOperation<Filter, Filter> {
     }
 
     @Override
-    public boolean evaluateResource(ResourceDto resource) throws FilterOperationException {
+    public boolean evaluateResource(ResourceDto<String, ?> resource) throws FilterOperationException {
         if(resource == null) {
-            return false;
+            throw new FilterOperationException("Resource can't be null");
         }
 
         return rightHandSide.matches(resource) && leftHandSide.matches(resource);

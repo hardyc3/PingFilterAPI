@@ -7,5 +7,5 @@ public abstract class FilterOperation<R, L> {
     R rightHandSide;
     L leftHandSide;
 
-    public abstract boolean evaluateResource(ResourceDto resource) throws FilterOperationException;
+    public abstract boolean evaluateResource(ResourceDto<String, ?> resource) throws FilterOperationException;
 }

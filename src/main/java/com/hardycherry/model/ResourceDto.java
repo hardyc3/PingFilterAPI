@@ -9,19 +9,19 @@ import java.util.Map;
 
 @Builder
 @Data
-public class ResourceDto {
+public class ResourceDto<K, V> {
     private Integer id;
     private String name;
-    private Map<String, ResourceDataDto> keyMap;
-    private Map<String, ResourceDataDto> valueMap;
+    private Map<K, ResourceDataDto<K, V>> keyMap;
+    private Map<V, ResourceDataDto<K, V>> valueMap;
     private LocalDateTime created;
     private LocalDateTime deleted;
 
-    public ResourceDataDto findKey(String key) {
+    public ResourceDataDto<K, V> findKey(K key) {
         return keyMap.get(key);
     }
 
-    public ResourceDataDto findValue(String value) {
+    public ResourceDataDto<K, V> findValue(V value) {
         return valueMap.get(value);
     }
 }

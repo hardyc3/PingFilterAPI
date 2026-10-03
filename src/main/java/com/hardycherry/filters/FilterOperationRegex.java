@@ -14,7 +14,12 @@ public class FilterOperationRegex extends FilterOperation<String, String> {
     }
 
     @Override
-    public boolean evaluateResource(ResourceDto resource) throws FilterOperationException {
+    public boolean evaluateResource(ResourceDto<String, ?> resource) throws FilterOperationException {
+
+        if(resource == null || resource.findKey(rightHandSide) == null || leftHandSide == null) {
+            throw new FilterOperationException("Resource and parameters can't be null");
+        }
+
         Object keyObj = resource.findKey(rightHandSide).getValue();
 
         if(keyObj instanceof String key) {

@@ -10,7 +10,18 @@ public class FilterOperationTrue extends FilterOperation<String, Void> {
     }
 
     @Override
-    public boolean evaluateResource(ResourceDto resource) throws FilterOperationException {
-        return (Boolean)resource.findKey(rightHandSide).getValue();
+    public boolean evaluateResource(ResourceDto<String, ?> resource) throws FilterOperationException {
+
+        if(resource == null || resource.findKey(rightHandSide) == null) {
+            throw new FilterOperationException("Resource can't be null");
+        }
+
+        var valueObj = resource.findKey(rightHandSide).getValue();
+        if(valueObj instanceof Boolean valueBool) {
+            return valueBool;
+        } else if(valueObj instanceof String valueStr) {
+            return "true".equalsIgnoreCase(valueStr);
+        }
+        return false;
     }
 }

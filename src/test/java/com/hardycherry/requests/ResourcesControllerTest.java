@@ -15,15 +15,9 @@ public class ResourcesControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    /**
-     *
-     * @throws Exception
-     *
-     * It tests response to be "Hello Java!"
-     */
     @Test
-    public void greetJava() throws Exception {
-        String response = mockMvc.perform(MockMvcRequestBuilders.get("/greeting/Java"))
+    public void getResourcesWithFilter() throws Exception {
+        String response = mockMvc.perform(MockMvcRequestBuilders.get("/resources"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andReturn()
             .getResponse()
@@ -32,37 +26,4 @@ public class ResourcesControllerTest {
         Assertions.assertEquals(response, "Hello Java!");
     }
 
-    /**
-     *
-     * @throws Exception
-     *
-     * It tests response to be "Hello Spring!"
-     */
-    @Test
-    public void greetSpring() throws Exception {
-        String response = mockMvc.perform(MockMvcRequestBuilders.get("/greeting/Spring"))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andReturn()
-            .getResponse()
-            .getContentAsString();
-
-        Assertions.assertEquals(response, "Hello Spring!");
-    }
-
-    /**
-     *
-     * @throws Exception
-     *
-     * It tests response to be "Hello RodJohnson!"
-     */
-    @Test
-    public void greetRodJohnson() throws Exception {
-        String response = mockMvc.perform(MockMvcRequestBuilders.get("/greeting/RodJohnson"))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andReturn()
-            .getResponse()
-            .getContentAsString();
-
-        Assertions.assertEquals(response, "Hello RodJohnson!");
-    }
 }

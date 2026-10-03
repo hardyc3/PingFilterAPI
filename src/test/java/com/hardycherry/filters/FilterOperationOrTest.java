@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-public class FilterOperationOrTest extends BaseFilterOperationTest {
+public class FilterOperationOrTest extends BaseFilterOperationTest<String, Object> {
 
     @Test
     public void testOr() throws FilterOperationException {
@@ -20,6 +20,6 @@ public class FilterOperationOrTest extends BaseFilterOperationTest {
         Assertions.assertTrue(and.evaluateResource(buildResource(Map.of("key5", "value5", "key2", "value2"))));
         Assertions.assertFalse(and.evaluateResource(buildResource(Map.of("key5", "value5", "key6", "value6"))));
         Assertions.assertFalse(and.evaluateResource(buildResource(Map.of())));
-        Assertions.assertFalse(and.evaluateResource(null));
+        Assertions.assertThrows(FilterOperationException.class, () -> and.evaluateResource(null));
     }
 }
