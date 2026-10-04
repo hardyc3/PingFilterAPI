@@ -34,7 +34,11 @@ public class ResourcesService {
         }
 
         Filter filter = parser.parse(filterJsonStr);
-        List<ResourceDto<String, ? super Object>> resourceDtoList = resourcesDao.getAllResources();
-        return filter.filterResources(resourceDtoList);
+        if(filter != null) {
+            List<ResourceDto<String, ? super Object>> resourceDtoList = resourcesDao.getAllResources();
+            return filter.filterResources(resourceDtoList);
+        } else {
+            return Collections.emptyList();
+        }
     }
 }
