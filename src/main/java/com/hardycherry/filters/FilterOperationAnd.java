@@ -3,9 +3,12 @@ package com.hardycherry.filters;
 import com.hardycherry.exception.FilterOperationException;
 import com.hardycherry.model.ResourceDto;
 
-public class FilterOperationAnd<K, V> extends FilterOperation<Filter, Filter, K, V> {
+public class FilterOperationAnd<K, V> extends FilterOperation<K, V> {
 
-    public FilterOperationAnd(Filter<?, ?, K, V> right, Filter<?, ?, K, V> left) {
+    private final Filter<K, V> rightHandSide;
+    private final Filter<K, V> leftHandSide;
+
+    public FilterOperationAnd(Filter<K, V> right, Filter<K, V> left) {
         rightHandSide = right;
         leftHandSide = left;
     }

@@ -11,8 +11,8 @@ public class FilterOperationNotTest extends BaseFilterOperationTest<String, Obje
     @Test
     public void testNot() throws FilterOperationException {
 
-        var isPresent = new Filter.Builder().isPresent("key1").build();
-        FilterOperationNot not = new FilterOperationNot(isPresent);
+        var isPresent = Filter.<String, Object>builder().isPresent("key1").build();
+        FilterOperationNot<String, Object> not = new FilterOperationNot<>(isPresent);
         Assertions.assertFalse(not.evaluateResource(buildResource(Map.of("key1", "value1"))));
         Assertions.assertTrue(not.evaluateResource(buildResource(Map.of( "key3", "value3"))));
         Assertions.assertTrue(not.evaluateResource(buildResource(Map.of())));

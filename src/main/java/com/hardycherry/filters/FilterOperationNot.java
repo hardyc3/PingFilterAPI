@@ -3,9 +3,11 @@ package com.hardycherry.filters;
 import com.hardycherry.exception.FilterOperationException;
 import com.hardycherry.model.ResourceDto;
 
-public class FilterOperationNot<K, V> extends FilterOperation<Filter, Void, K, V> {
+public class FilterOperationNot<K, V> extends FilterOperation<K, V> {
 
-    public FilterOperationNot(Filter<?, ?, K, V> filter) {
+    private final Filter<K, V> rightHandSide;
+
+    public FilterOperationNot(Filter<K, V> filter) {
         rightHandSide = filter;
     }
 

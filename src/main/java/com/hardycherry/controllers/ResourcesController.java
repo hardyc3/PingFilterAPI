@@ -36,7 +36,7 @@ public class ResourcesController {
         log.info("Using the filter to find matching resources, filterJsonStr=" + filterJsonStr);
 
         try {
-            List<ResourceDto<String, ?>> resourceDtoList = resourcesService.getResourcesWithFilter(filterJsonStr);
+            List<ResourceDto<String, Object>> resourceDtoList = resourcesService.getResourcesWithFilter(filterJsonStr);
             if (resourceDtoList.isEmpty()) {
                 return ErrorResponse.builder(null, HttpStatus.BAD_REQUEST, "No resources found with supplied filter");
             } else {

@@ -11,7 +11,7 @@ public class FilterOperationLessThanTest extends BaseFilterOperationTest<String,
     @Test
     public void testLessThan() throws FilterOperationException {
 
-        FilterOperationLessThan lessThan = new FilterOperationLessThan("key1", "key2");
+        FilterOperationLessThan<String, Object> lessThan = new FilterOperationLessThan<>("key1", "key2");
 
         Assertions.assertFalse(lessThan.evaluateResource(buildResource(Map.of("key1", "1", "key2", "0"))));
         Assertions.assertFalse(lessThan.evaluateResource(buildResource(Map.of("key1", "1.1", "key2", "0.1"))));

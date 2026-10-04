@@ -10,7 +10,7 @@ public class FilterOperationTrueTest  extends BaseFilterOperationTest<String, Ob
 
     @Test
     public void testTrue() throws FilterOperationException {
-        FilterOperationTrue isTrue = new FilterOperationTrue("key1");
+        FilterOperationTrue<String, Object> isTrue = new FilterOperationTrue<>("key1");
         Assertions.assertTrue(isTrue.evaluateResource(buildResource(Map.of("key1", "true"))));
         Assertions.assertTrue(isTrue.evaluateResource(buildResource(Map.of("key1", true))));
         Assertions.assertTrue(isTrue.evaluateResource(buildResource(Map.of("key1", "TRUE"))));

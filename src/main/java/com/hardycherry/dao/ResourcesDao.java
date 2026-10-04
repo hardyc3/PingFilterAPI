@@ -20,14 +20,14 @@ public class ResourcesDao {
     @Autowired
     DSLContext dslContext;
 
-    public List<ResourceDto<String, ? super Object>> getAllResources() {
+    public List<ResourceDto<String, Object>> getAllResources() {
         Map<ResourcesRecord, Result<ResourceDataRecord>> recordsAndData = dslContext.select()
                 .from(Resources.RESOURCES.join(ResourceData.RESOURCE_DATA)
                         .on(Resources.RESOURCES.ID.eq(ResourceData.RESOURCE_DATA.RESOURCE_ID)))
                 .fetch()
                 .intoGroups(Resources.RESOURCES, ResourceData.RESOURCE_DATA);
 
-        List<ResourceDto<String, ? super Object>> results = new ArrayList<>();
+        List<ResourceDto<String, Object>> results = new ArrayList<>();
         for(ResourcesRecord resourcesRecord : recordsAndData.keySet()) {
             List<ResourceDataRecord> resourceDataRecords = recordsAndData.get(resourcesRecord);
             Map<String, ResourceDataDto<String, Object>> keyMap = new HashMap<>();

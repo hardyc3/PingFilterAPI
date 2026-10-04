@@ -21,22 +21,22 @@ public class FilterParser {
     private final String LT = "lt";
     private final String REGEX = "regex";
 
-    public Filter parse(String filter) throws FilterParsingException {
+    public Filter<String, Object> parse(String filter) throws FilterParsingException {
         GsonJsonParser parser = new GsonJsonParser();
         Map<String, Object> jsonData = parser.parseMap(filter);
 
-        Filter.Builder builder = Filter.builder();
+        Filter.Builder<String, Object> builder = Filter.builder();
         if(jsonData.containsKey("filters") && jsonData.get("filters") instanceof List<?> filterList) {
 
             for(var filterObj : filterList) {
 
-                if(filterObj instanceof Map filterMap) {
+                if(filterObj instanceof Map<?, ?> filterMap) {
                     var filterType = (String)filterMap.get("type");
                     switch(filterType.toLowerCase()) {
                         case AND:
                         case OR:
                         case NOT:
-                            parseFilters(builder, (List)filterMap.get("list"));
+                            parseFilters(builder, (List<?>)filterMap.get("list"));
                             break;
                         case EQUALS:
                             builder.equals((String)filterMap.get("key"), filterMap.get("value"));
@@ -71,7 +71,7 @@ public class FilterParser {
         return null;
     }
 
-    private void parseFilters(Filter.Builder builder, List<Object> filters) {
+    private void parseFilters(Filter.Builder<String, Object> builder, List<?> filters) {
 
     }
 }

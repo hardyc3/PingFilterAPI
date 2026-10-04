@@ -10,7 +10,7 @@ public class FilterOperationIsPresentTest extends BaseFilterOperationTest<String
 
     @Test
     public void testIsPresent() throws FilterOperationException {
-        FilterOperationIsPresent isPresent = new FilterOperationIsPresent("key1");
+        FilterOperationIsPresent<String, Object> isPresent = new FilterOperationIsPresent<>("key1");
 
         Assertions.assertTrue(isPresent.evaluateResource(buildResource(Map.of("key1", "value1", "key2", "value2"))));
         Assertions.assertFalse(isPresent.evaluateResource(buildResource(Map.of("key2", "value2"))));

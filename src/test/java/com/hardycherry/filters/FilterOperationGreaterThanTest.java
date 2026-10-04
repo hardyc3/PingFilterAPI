@@ -11,7 +11,7 @@ public class FilterOperationGreaterThanTest extends BaseFilterOperationTest<Stri
     @Test
     public void testGreaterThan() throws FilterOperationException {
 
-        FilterOperationGreaterThan greaterThan = new FilterOperationGreaterThan("key1", "key2");
+        FilterOperationGreaterThan<String, Object> greaterThan = new FilterOperationGreaterThan<>("key1", "key2");
 
         Assertions.assertTrue(greaterThan.evaluateResource(buildResource(Map.of("key1", "1", "key2", "0"))));
         Assertions.assertTrue(greaterThan.evaluateResource(buildResource(Map.of("key1", "1.1", "key2", "0.1"))));

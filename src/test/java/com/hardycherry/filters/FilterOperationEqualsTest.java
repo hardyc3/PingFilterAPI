@@ -11,7 +11,7 @@ public class FilterOperationEqualsTest extends BaseFilterOperationTest<String, O
     @Test
     public void testEqualsByKey() throws FilterOperationException {
 
-        FilterOperationEquals equals = new FilterOperationEquals("key1", "value1");
+        FilterOperationEquals<String, Object> equals = new FilterOperationEquals<>("key1", "value1");
         Assertions.assertTrue(equals.evaluateResource(buildResource(Map.of("key1", "value1", "key2", "value1"))));
         Assertions.assertTrue(equals.evaluateResource(buildResource(Map.of("key1", "value1"))));
         Assertions.assertFalse(equals.evaluateResource(buildResource(Map.of("key2", "value2"))));

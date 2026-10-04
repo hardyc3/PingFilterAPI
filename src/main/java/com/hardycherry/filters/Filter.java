@@ -6,84 +6,84 @@ import com.hardycherry.model.ResourceDto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Filter<R, L, K, V> {
+public class Filter<K, V> {
 
-    protected final List<FilterOperation> operations;
+    private final List<FilterOperation<K, V>> operations;
 
-    private Filter(List<FilterOperation> operations) {
+    private Filter(List<FilterOperation<K, V>> operations) {
         this.operations = operations;
     }
 
-    public static Builder builder() {
-        return new Builder();
+    public static <K, V> Builder<K, V> builder() {
+        return new Builder<>();
     }
 
-    public static class Builder<R, L, K, V> {
-        private final List<FilterOperation> builderOperations;
+    public static class Builder<K, V> {
+        private final List<FilterOperation<K, V>> builderOperations;
 
         public Builder() {
             builderOperations = new ArrayList<>();
         }
 
-        public Builder<R, L, K, V> and(Filter<R, L, K, V> rightHandSide, Filter<R, L, K, V> leftHandSide) {
+        public Builder<K, V> and(Filter<K, V> rightHandSide, Filter<K, V> leftHandSide) {
             builderOperations.add(new FilterOperationAnd<>(rightHandSide, leftHandSide));
             return this;
         }
 
-        public Builder<R, L, K, V> or(Filter<R, L, String, V> rightHandSide, Filter<R, L, String, V> leftHandSide) {
+        public Builder<K, V> or(Filter<K, V> rightHandSide, Filter<K, V> leftHandSide) {
             builderOperations.add(new FilterOperationOr<>(rightHandSide, leftHandSide));
             return this;
         }
 
-        public Builder<R, L, K, V> not(Filter<R, L, K, V> filter) {
+        public Builder<K, V> not(Filter<K, V> filter) {
             builderOperations.add(new FilterOperationNot<>(filter));
             return this;
         }
 
-        public Builder<R, L, K, V> gt(String key, String value) {
-            builderOperations.add(new FilterOperationGreaterThan<V>(key, value));
+        public Builder<K, V> gt(K key, K otherKey) {
+            builderOperations.add(new FilterOperationGreaterThan<>(key, otherKey));
             return this;
         }
 
-        public Builder<R, L, K, V> lt(String key, String value) {
-            builderOperations.add(new FilterOperationLessThan<V>(key, value));
+        public Builder<K, V> lt(K key, K otherKey) {
+            builderOperations.add(new FilterOperationLessThan<>(key, otherKey));
             return this;
         }
 
-        public Builder<R, L, K, V> isPresent(String key) {
-            builderOperations.add(new FilterOperationIsPresent<V>(key));
+        public Builder<K, V> isPresent(K key) {
+            builderOperations.add(new FilterOperationIsPresent<>(key));
             return this;
         }
 
-        public Builder<R, L, K, V> equals(String key, L value) {
-            builderOperations.add(new FilterOperationEquals<L, V>(key, value));
+        public Builder<K, V> equals(K key, V value) {
+            builderOperations.add(new FilterOperationEquals<>(key, value));
             return this;
         }
 
-        public Builder<R, L, K, V> isFalse(String key) {
-            builderOperations.add(new FilterOperationFalse<V>(key));
+        public Builder<K, V> isFalse(K key) {
+            builderOperations.add(new FilterOperationFalse<>(key));
             return this;
         }
 
-        public Builder<R, L, K, V> isTrue(String key) {
-            builderOperations.add(new FilterOperationTrue<V>(key));
+        public Builder<K, V> isTrue(K key) {
+            builderOperations.add(new FilterOperationTrue<>(key));
             return this;
         }
 
-        public Builder<R, L, K, V> regex(String key, String regex) {
-            builderOperations.add(new FilterOperationRegex<V>(key, regex));
+        public Builder<K, V> regex(K key, String regex) {
+            builderOperations.add(new FilterOperationRegex<>(key, regex));
             return this;
         }
 
-        public Filter build() {
-            return new Filter(builderOperations);
+        public Filter<K, V> build() {
+            return new Filter<>(builderOperations);
         }
     }
 
     public boolean matches(ResourceDto<K, V> resourceDto) throws FilterOperationException {
         boolean result = true;
 
-        for(FilterOperation operation : operations) {
+        for(FilterOperation<K, V> operation : operations) {
             if(!operation.evaluateResource(resourceDto)) {
                 result = false;
                 break;
@@ -93,7 +93,7 @@ public class Filter<R, L, K, V> {
         return result;
     }
 
-    public List<ResourceDto<K, V>> filterResources(List<ResourceDto<K, V>> resources) throws FilterOperationException {
+    public List<ResourceDto<K, V>> filterResources(List<? extends ResourceDto<K, V>> resources) throws FilterOperationException {
         List<ResourceDto<K, V>> results = new ArrayList<>();
         if(resources == null) {
             return results;

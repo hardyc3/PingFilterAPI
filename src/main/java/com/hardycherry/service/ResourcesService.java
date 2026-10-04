@@ -24,7 +24,7 @@ public class ResourcesService {
     @Autowired
     private ResourcesDao resourcesDao;
 
-    public List<ResourceDto<String, ?>> getResourcesWithFilter(String filterJsonStr) throws FilterParsingException, FilterOperationException {
+    public List<ResourceDto<String, Object>> getResourcesWithFilter(String filterJsonStr) throws FilterParsingException, FilterOperationException {
 
         log.info("Parsing json and filtering all resources in db, json=" + filterJsonStr);
 
@@ -33,9 +33,9 @@ public class ResourcesService {
             return Collections.emptyList();
         }
 
-        Filter filter = parser.parse(filterJsonStr);
+        Filter<String, Object> filter = parser.parse(filterJsonStr);
         if(filter != null) {
-            List<ResourceDto<String, ? super Object>> resourceDtoList = resourcesDao.getAllResources();
+            List<ResourceDto<String, Object>> resourceDtoList = resourcesDao.getAllResources();
             return filter.filterResources(resourceDtoList);
         } else {
             return Collections.emptyList();

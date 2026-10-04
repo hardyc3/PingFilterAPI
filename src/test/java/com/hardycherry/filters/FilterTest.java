@@ -13,9 +13,9 @@ public class FilterTest extends BaseFilterOperationTest<String, Object> {
 
     @Test
     public void testFilter1() throws FilterOperationException {
-        Filter filter = Filter.builder()
+        Filter<String, Object> filter = Filter.<String, Object>builder()
                 .isFalse("key1")
-                .or(Filter.builder().equals("key2", "value2").build(), Filter.builder().equals("key3", "value3").build())
+                .or(Filter.<String, Object>builder().equals("key2", "value2").build(), Filter.<String, Object>builder().equals("key3", "value3").build())
                 .build();
 
         Assertions.assertTrue(filter.matches(buildResource(Map.of("key1", "false", "key2", "value2"))));
@@ -27,9 +27,9 @@ public class FilterTest extends BaseFilterOperationTest<String, Object> {
 
     @Test
     public void testFilter2() throws FilterOperationException {
-        Filter<String, String, String, Object> filter = Filter.builder()
+        Filter<String, Object> filter = Filter.<String, Object>builder()
                 .isTrue("key1")
-                .and(Filter.builder().equals("key2", "value2").build(), Filter.builder().equals("key3", "value3").build())
+                .and(Filter.<String, Object>builder().equals("key2", "value2").build(), Filter.<String, Object>builder().equals("key3", "value3").build())
                 .build();
 
         Assertions.assertTrue(filter.matches(buildResource(Map.of("key1", "true", "key2", "value2", "key3", "value3"))));
@@ -41,8 +41,8 @@ public class FilterTest extends BaseFilterOperationTest<String, Object> {
 
     @Test
     public void testFilter3() throws FilterOperationException {
-        Filter filter = Filter.builder()
-                .not(Filter.builder().isTrue("key1").build())
+        Filter<String, Object> filter = Filter.<String, Object>builder()
+                .not(Filter.<String, Object>builder().isTrue("key1").build())
                 .build();
 
         Assertions.assertTrue(filter.matches(buildResource(Map.of("key1", "false"))));
@@ -53,7 +53,7 @@ public class FilterTest extends BaseFilterOperationTest<String, Object> {
 
     @Test
     public void testFilterGT() throws FilterOperationException {
-        Filter<String, Integer, String, Object> filter = Filter.builder()
+        Filter<String, Object> filter = Filter.<String, Object>builder()
                 .gt("key1", "key2")
                 .build();
 
@@ -64,7 +64,7 @@ public class FilterTest extends BaseFilterOperationTest<String, Object> {
 
     @Test
     public void testFilterLT() throws FilterOperationException {
-        Filter<String, Integer, String, Object> filter = Filter.builder()
+        Filter<String, Object> filter = Filter.<String, Object>builder()
                 .lt("key1", "key2")
                 .build();
 
@@ -76,7 +76,7 @@ public class FilterTest extends BaseFilterOperationTest<String, Object> {
     @Test
     public void testFilterRegex() throws FilterOperationException {
 
-        Filter<String, Integer, String, Object> filter = Filter.builder()
+        Filter<String, Object> filter = Filter.<String, Object>builder()
                 .regex("key1", "value.*").build();
 
         Assertions.assertTrue(filter.matches(buildResource(Map.of("key1", "value1"))));
@@ -89,7 +89,7 @@ public class FilterTest extends BaseFilterOperationTest<String, Object> {
 
     @Test
     public void testFilterMultiple() throws FilterOperationException {
-        Filter<String, String, String, Object> filter = Filter.builder().isFalse("key1").build();
+        Filter<String, Object> filter = Filter.<String, Object>builder().isFalse("key1").build();
 
         List<ResourceDto<String, Object>> resources = new ArrayList<>();
         resources.add(buildResource(Map.of("key1", "false")));

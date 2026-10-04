@@ -3,20 +3,22 @@ package com.hardycherry.filters;
 import com.hardycherry.exception.FilterOperationException;
 import com.hardycherry.model.ResourceDto;
 
-public class FilterOperationIsPresent<V> extends FilterOperation<String, Void, String, V> {
+public class FilterOperationIsPresent<K, V> extends FilterOperation<K, V> {
 
-    public FilterOperationIsPresent(String right) {
-        rightHandSide = right;
+    private final K key;
+
+    public FilterOperationIsPresent(K key) {
+        this.key = key;
     }
 
     @Override
-    public boolean evaluateResource(ResourceDto<String, V> resource) throws FilterOperationException {
+    public boolean evaluateResource(ResourceDto<K, V> resource) throws FilterOperationException {
         if(resource == null) {
             throw new FilterOperationException("Resource can't be null");
         }
-        var key = resource.findKey(rightHandSide);
-        if(key != null) {
-            return key.getValue() != null;
+        var found = resource.findKey(key);
+        if(found != null) {
+            return found.getValue() != null;
         } else {
             return false;
         }
@@ -24,6 +26,6 @@ public class FilterOperationIsPresent<V> extends FilterOperation<String, Void, S
 
     @Override
     public String toString() {
-        return rightHandSide.toString() + " is present";
+        return String.valueOf(key) + " is present";
     }
 }

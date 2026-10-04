@@ -12,7 +12,7 @@ public class FilterOperationRegexTest extends BaseFilterOperationTest<String, Ob
     @Test
     public void testRegex() throws FilterOperationException {
 
-        FilterOperationRegex regex = new FilterOperationRegex("key1", "value.*");
+        FilterOperationRegex<String, Object> regex = new FilterOperationRegex<>("key1", "value.*");
         Assertions.assertTrue(regex.evaluateResource(buildResource(Map.of("key1", "value1"))));
         Assertions.assertTrue(regex.evaluateResource(buildResource(Map.of("key1", "value test"))));
         Assertions.assertFalse(regex.evaluateResource(buildResource(Map.of("key1", "test"))));

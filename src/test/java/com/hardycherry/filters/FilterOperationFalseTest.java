@@ -10,7 +10,7 @@ public class FilterOperationFalseTest extends BaseFilterOperationTest<String, Ob
 
     @Test
     public void testFalse() throws FilterOperationException {
-        FilterOperationFalse isFalse = new FilterOperationFalse("key1");
+        FilterOperationFalse<String, Object> isFalse = new FilterOperationFalse<>("key1");
         Assertions.assertTrue(isFalse.evaluateResource(buildResource(Map.of("key1", "false"))));
         Assertions.assertTrue(isFalse.evaluateResource(buildResource(Map.of("key1", "FALSE"))));
         Assertions.assertTrue(isFalse.evaluateResource(buildResource(Map.of("key1", "False"))));
