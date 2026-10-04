@@ -4,17 +4,17 @@
       "type": "and",
       "list": [
         {
-          "type": "equal",
+          "type": "equals",
           "key": "user",
           "value": "fred"
         },
         {
-          "type": "equal",
+          "type": "equals",
           "key": "age",
           "value": "33"
         },
         {
-          "type": "equal",
+          "type": "equals",
           "key": "role",
           "value": "admin"
         }

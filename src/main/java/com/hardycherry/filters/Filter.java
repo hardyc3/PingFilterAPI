@@ -25,18 +25,18 @@ public class Filter<K, V> {
             builderOperations = new ArrayList<>();
         }
 
-        public Builder<K, V> and(Filter<K, V> rightHandSide, Filter<K, V> leftHandSide) {
-            builderOperations.add(new FilterOperationAnd<>(rightHandSide, leftHandSide));
+        public Builder<K, V> and(Filter<K, V> filters) {
+            builderOperations.add(new FilterOperationAnd<>(filters));
             return this;
         }
 
-        public Builder<K, V> or(Filter<K, V> rightHandSide, Filter<K, V> leftHandSide) {
-            builderOperations.add(new FilterOperationOr<>(rightHandSide, leftHandSide));
+        public Builder<K, V> or(Filter<K, V> filters) {
+            builderOperations.add(new FilterOperationOr<>(filters));
             return this;
         }
 
-        public Builder<K, V> not(Filter<K, V> filter) {
-            builderOperations.add(new FilterOperationNot<>(filter));
+        public Builder<K, V> not(Filter<K, V> filters) {
+            builderOperations.add(new FilterOperationNot<>(filters));
             return this;
         }
 
@@ -80,12 +80,25 @@ public class Filter<K, V> {
         }
     }
 
-    public boolean matches(ResourceDto<K, V> resourceDto) throws FilterOperationException {
+    public boolean allMatch(ResourceDto<K, V> resourceDto) throws FilterOperationException {
         boolean result = true;
 
         for(FilterOperation<K, V> operation : operations) {
             if(!operation.evaluateResource(resourceDto)) {
                 result = false;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    public boolean anyMatch(ResourceDto<K, V> resourceDto) throws FilterOperationException {
+        boolean result = false;
+
+        for(FilterOperation<K, V> operation : operations) {
+            if(operation.evaluateResource(resourceDto)) {
+                result = true;
                 break;
             }
         }
@@ -100,7 +113,7 @@ public class Filter<K, V> {
         }
 
         for(ResourceDto<K, V> resource : resources) {
-            if(matches(resource)) {
+            if(allMatch(resource)) {
                 results.add(resource);
             }
         }

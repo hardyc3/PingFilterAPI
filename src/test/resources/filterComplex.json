@@ -1,24 +1,36 @@
 {
   "filters": [
     {
-      "type": "and",
-      "list": [
-        {
-          "type": "equal",
-          "key": "user",
-          "value": "fred"
-        },
-        {
-          "type": "equal",
-          "key": "age",
-          "value": "33"
-        },
-        {
-          "type": "equal",
-          "key": "role",
-          "value": "admin"
-        }
-      ]
+      "type": "equal",
+      "key": "user",
+      "value": "fred"
+    },
+    {
+      "type": "true",
+      "key": "user"
+    },
+    {
+      "type": "false",
+      "key": "admin"
+    },
+    {
+      "type": "present",
+      "key": "role"
+    },
+    {
+      "type": "gt",
+      "key": "age",
+      "value": "40"
+    },
+    {
+      "type": "lt",
+      "key": "age",
+      "value": "60"
+    },
+    {
+      "type": "regex",
+      "key": "name",
+      "value": "joe.*"
     }
   ]
 }

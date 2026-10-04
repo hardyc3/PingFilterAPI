@@ -11,10 +11,9 @@ public class FilterOperationOrTest extends BaseFilterOperationTest<String, Objec
     @Test
     public void testOr() throws FilterOperationException {
 
-        var right = Filter.<String, Object>builder().isPresent("key1").build();
-        var left = Filter.<String, Object>builder().isPresent("key2").build();
+        var right = Filter.<String, Object>builder().isPresent("key1").isPresent("key2").build();
 
-        FilterOperationOr<String, Object> and = new FilterOperationOr<>(right, left);
+        FilterOperationOr<String, Object> and = new FilterOperationOr<>(right);
         Assertions.assertTrue(and.evaluateResource(buildResource(Map.of("key1", "value1", "key2", "value2"))));
         Assertions.assertTrue(and.evaluateResource(buildResource(Map.of("key1", "value1", "key3", "value3"))));
         Assertions.assertTrue(and.evaluateResource(buildResource(Map.of("key5", "value5", "key2", "value2"))));

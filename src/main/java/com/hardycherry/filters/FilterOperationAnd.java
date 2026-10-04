@@ -5,12 +5,10 @@ import com.hardycherry.model.ResourceDto;
 
 public class FilterOperationAnd<K, V> extends FilterOperation<K, V> {
 
-    private final Filter<K, V> rightHandSide;
-    private final Filter<K, V> leftHandSide;
+    private final Filter<K, V> filters;
 
-    public FilterOperationAnd(Filter<K, V> right, Filter<K, V> left) {
-        rightHandSide = right;
-        leftHandSide = left;
+    public FilterOperationAnd(Filter<K, V> filters) {
+        this.filters = filters;
     }
 
     @Override
@@ -19,11 +17,11 @@ public class FilterOperationAnd<K, V> extends FilterOperation<K, V> {
             throw new FilterOperationException("Resource can't be null");
         }
 
-        return rightHandSide.matches(resource) && leftHandSide.matches(resource);
+        return filters.allMatch(resource);
     }
 
     @Override
     public String toString() {
-        return "((" + rightHandSide.toString() + ") AND (" + leftHandSide.toString() + "))";
+        return "AND (" + filters.toString() + ")";
     }
 }

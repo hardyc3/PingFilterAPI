@@ -5,10 +5,10 @@ import com.hardycherry.model.ResourceDto;
 
 public class FilterOperationNot<K, V> extends FilterOperation<K, V> {
 
-    private final Filter<K, V> rightHandSide;
+    private final Filter<K, V> filters;
 
-    public FilterOperationNot(Filter<K, V> filter) {
-        rightHandSide = filter;
+    public FilterOperationNot(Filter<K, V> filters) {
+        this.filters = filters;
     }
 
     @Override
@@ -16,11 +16,11 @@ public class FilterOperationNot<K, V> extends FilterOperation<K, V> {
         if(resource == null) {
             throw new FilterOperationException("Resource can't be null");
         }
-        return !rightHandSide.matches(resource);
+        return !filters.allMatch(resource);
     }
 
     @Override
     public String toString() {
-        return "NOT (" + rightHandSide.toString() + ")";
+        return "NOT (" + filters.toString() + ")";
     }
 }

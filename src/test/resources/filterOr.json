@@ -4,17 +4,17 @@
       "type": "or",
       "list": [
         {
-          "type": "equal",
+          "type": "equals",
           "key": "user",
           "value": "fred"
         },
         {
-          "type": "equal",
+          "type": "equals",
           "key": "user",
           "value": "jane"
         },
         {
-          "type": "equal",
+          "type": "equals",
           "key": "user",
           "value": "max"
         }

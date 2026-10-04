@@ -1,6 +1,12 @@
 package com.hardycherry.requests;
 
+import com.hardycherry.generated.tables.ResourceData;
+import com.hardycherry.generated.tables.Resources;
+import com.hardycherry.generated.tables.records.ResourceDataRecord;
+import com.hardycherry.generated.tables.records.ResourcesRecord;
+import org.jooq.DSLContext;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.nio.charset.Charset;
+import java.util.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -27,9 +34,22 @@ public class ResourcesControllerTest {
     private Resource notJsonResource;
     @Value("classpath:filterComplex.json")
     private Resource complexJsonResource;
+    @Autowired
+    private DSLContext dslContext;
+
+    @BeforeEach
+    public void before() {
+        dslContext.deleteFrom(ResourceData.RESOURCE_DATA).execute();
+        dslContext.deleteFrom(Resources.RESOURCES).execute();
+    }
 
     @Test
-    public void getResourcesWithFilter() throws Exception {
+    public void getResourcesWithANDFilter() throws Exception {
+        Random r = new Random();
+        Map<String, String> data1 = Map.of("user", "fred", "age", "33", "role", "admin");
+        Map<String, String> data2 = Map.of("user", "max", "age", "33", "role", "admin");
+        createResource(data1, r.nextInt());
+        createResource(data2, r.nextInt());
         String response = mockMvc.perform(MockMvcRequestBuilders.post("/resources")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(andJsonResource.getContentAsString(Charset.defaultCharset())))
@@ -38,7 +58,42 @@ public class ResourcesControllerTest {
             .getResponse()
             .getContentAsString();
 
-        Assertions.assertEquals(response, "Hello Java!");
+        Assertions.assertTrue(response.contains("value\":\"fred"));
+        Assertions.assertFalse(response.contains("value\":\"max"));
     }
 
+    @Test
+    public void getResourcesWithORFilter() throws Exception {
+        Random r = new Random();
+        Map<String, String> data1 = Map.of("user", "fred", "age", "33", "role", "admin");
+        Map<String, String> data2 = Map.of("user", "max", "age", "33", "role", "admin");
+        createResource(data1, r.nextInt());
+        createResource(data2, r.nextInt());
+        String response = mockMvc.perform(MockMvcRequestBuilders.post("/resources")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(orJsonResource.getContentAsString(Charset.defaultCharset())))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        Assertions.assertTrue(response.contains("value\":\"fred"));
+        Assertions.assertTrue(response.contains("value\":\"max"));
+    }
+
+    private void createResource(Map<String, String> data, Integer id) {
+        ResourcesRecord resource = new ResourcesRecord();
+        resource.setId(id);
+        resource.setName("test"+id);
+        dslContext.executeInsert(resource);
+
+        for(String key : data.keySet()) {
+            ResourceDataRecord dataRecord = new ResourceDataRecord();
+            dataRecord.setResourceId(resource.getId());
+            dataRecord.setResourceKey(key);
+            dataRecord.setResourceValue(data.get(key));
+            dslContext.executeInsert(dataRecord);
+        }
+    }
 }
+

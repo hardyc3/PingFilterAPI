@@ -4,7 +4,7 @@
       "type": "not",
       "list": [
         {
-          "type": "equal",
+          "type": "equals",
           "key": "user",
           "value": "fred"
         }

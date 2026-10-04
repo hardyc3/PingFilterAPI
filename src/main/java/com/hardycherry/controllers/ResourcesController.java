@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +39,7 @@ public class ResourcesController {
         try {
             List<ResourceDto<String, Object>> resourceDtoList = resourcesService.getResourcesWithFilter(filterJsonStr);
             if (resourceDtoList.isEmpty()) {
-                return ErrorResponse.builder(null, HttpStatus.BAD_REQUEST, "No resources found with supplied filter");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No resources found with supplied filter");
             } else {
                 return resourceDtoList;
             }
