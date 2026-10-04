@@ -1,6 +1,7 @@
 **AI Usage**
 - Used to review warnings in the Filter class caused by the parameterized class use
   - prompt: "Take a look at the code in this repo and give me some suggestions to fix the compiler warnings due to the type erasure that's happening in some places like the Filter class"
+- duckduckgo ai to help compose the docker and docker-compose files
 
 **Running**
 - From Intellij

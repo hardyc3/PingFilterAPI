@@ -54,23 +54,23 @@ public class FilterTest extends BaseFilterOperationTest<String, Object> {
     @Test
     public void testFilterGT() throws FilterOperationException {
         Filter<String, Object> filter = Filter.<String, Object>builder()
-                .gt("key1", "key2")
+                .gt("key1", "5")
                 .build();
 
-        Assertions.assertTrue(filter.allMatch(buildResource(Map.of("key1", "76", "key2", "4"))));
-        Assertions.assertFalse(filter.allMatch(buildResource(Map.of("key1", "4", "key2", "54"))));
-        Assertions.assertEquals("key1 > key2", filter.toString());
+        Assertions.assertTrue(filter.allMatch(buildResource(Map.of("key1", "76"))));
+        Assertions.assertFalse(filter.allMatch(buildResource(Map.of("key1", "4"))));
+        Assertions.assertEquals("key1 > 5", filter.toString());
     }
 
     @Test
     public void testFilterLT() throws FilterOperationException {
         Filter<String, Object> filter = Filter.<String, Object>builder()
-                .lt("key1", "key2")
+                .lt("key1", "75")
                 .build();
 
-        Assertions.assertTrue(filter.allMatch(buildResource(Map.of("key1", "4", "key2", "54"))));
-        Assertions.assertFalse(filter.allMatch(buildResource(Map.of("key1", "76", "key2", "4"))));
-        Assertions.assertEquals("key1 < key2", filter.toString());
+        Assertions.assertTrue(filter.allMatch(buildResource(Map.of("key1", "4"))));
+        Assertions.assertFalse(filter.allMatch(buildResource(Map.of("key1", "76"))));
+        Assertions.assertEquals("key1 < 75", filter.toString());
     }
 
     @Test

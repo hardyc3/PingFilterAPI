@@ -1,17 +1,17 @@
 {
   "filters": [
     {
-      "type": "equal",
+      "type": "equals",
       "key": "user",
       "value": "fred"
     },
     {
       "type": "true",
-      "key": "user"
+      "key": "isCool"
     },
     {
       "type": "false",
-      "key": "admin"
+      "key": "isAdmin"
     },
     {
       "type": "present",
@@ -29,8 +29,8 @@
     },
     {
       "type": "regex",
-      "key": "name",
-      "value": "joe.*"
+      "key": "lastname",
+      "value": "max.*"
     }
   ]
 }

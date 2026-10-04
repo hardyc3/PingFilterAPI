@@ -7,6 +7,11 @@
           "type": "equals",
           "key": "user",
           "value": "fred"
+        },
+        {
+          "type": "equals",
+          "key": "age",
+          "value": "33"
         }
       ]
     }

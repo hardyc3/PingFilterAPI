@@ -11,15 +11,13 @@ public class FilterOperationLessThanTest extends BaseFilterOperationTest<String,
     @Test
     public void testLessThan() throws FilterOperationException {
 
-        FilterOperationLessThan<String, Object> lessThan = new FilterOperationLessThan<>("key1", "key2");
+        FilterOperationLessThan<String, Object> lessThan = new FilterOperationLessThan<>("key1", "0");
 
-        Assertions.assertFalse(lessThan.evaluateResource(buildResource(Map.of("key1", "1", "key2", "0"))));
-        Assertions.assertFalse(lessThan.evaluateResource(buildResource(Map.of("key1", "1.1", "key2", "0.1"))));
-        Assertions.assertFalse(lessThan.evaluateResource(buildResource(Map.of("key1", "1203940810923804", "key2", "1203940810923802"))));
+        Assertions.assertFalse(lessThan.evaluateResource(buildResource(Map.of("key1", "1"))));
+        Assertions.assertFalse(lessThan.evaluateResource(buildResource(Map.of("key1", "1.1"))));
+        Assertions.assertFalse(lessThan.evaluateResource(buildResource(Map.of("key1", "1203940810923804"))));
 
-        Assertions.assertTrue(lessThan.evaluateResource(buildResource(Map.of("key1", "0", "key2", "1"))));
-        Assertions.assertTrue(lessThan.evaluateResource(buildResource(Map.of("key1", "0.1", "key2", "1.1"))));
-        Assertions.assertTrue(lessThan.evaluateResource(buildResource(Map.of("key1", "1203940810923801", "key2", "1203940810923802"))));
+        Assertions.assertTrue(lessThan.evaluateResource(buildResource(Map.of("key1", "-0.1"))));
 
         Assertions.assertThrows(FilterOperationException.class, () -> lessThan.evaluateResource(buildResource(Map.of())));
         Assertions.assertThrows(FilterOperationException.class, () -> lessThan.evaluateResource(null));

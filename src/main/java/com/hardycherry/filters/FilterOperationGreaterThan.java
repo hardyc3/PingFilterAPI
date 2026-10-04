@@ -15,12 +15,12 @@ public class FilterOperationGreaterThan<K, V> extends FilterOperation<K, V> {
 
     @Override
     public boolean evaluateResource(ResourceDto<K, V> resource) throws FilterOperationException {
-        if(resource == null || resource.findKey(rightKey) == null || resource.findKey(leftKey) == null) {
+        if(resource == null || resource.findKey(rightKey) == null || leftKey == null) {
             throw new FilterOperationException("Resource can't be null");
         }
 
         String rhsVal = String.valueOf(resource.findKey(rightKey).getValue());
-        String lhsVal = String.valueOf(resource.findKey(leftKey).getValue());
+        String lhsVal = String.valueOf(leftKey);
         var rhs = Double.parseDouble(rhsVal);
         var lhs = Double.parseDouble(lhsVal);
 
