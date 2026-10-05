@@ -3,13 +3,12 @@ WORKDIR /app
 COPY pom.xml .
 RUN mvn dependency:go-offline -B
 COPY src ./src
-RUN mvn clean package -DskipTests flyway:clean flyway:migrate -Dflyway.cleanDisabled=false -Dskip.jooq.generation=true
-
+RUN mvn clean package -DskipTests -Dskip.jooq.generation=true
 
 FROM eclipse-temurin:24-jre
 WORKDIR /app
-COPY --from=builder /app/target/*.jar app.jar
 RUN mkdir /data
+COPY --from=builder /app/target/PingFilterAPI-1.0.jar app.jar
 
-EXPOSE 8000
+EXPOSE 8000 5005
 ENTRYPOINT ["java", "-jar", "app.jar"]

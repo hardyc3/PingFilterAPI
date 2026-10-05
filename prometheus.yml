@@ -14,7 +14,7 @@ scrape_configs:
       - targets: ['node-exporter:9100']
         
   - job_name: 'filterapi'
-    metrics_path: '/actuator/prometheus'
+    metrics_path: '/api/actuator/prometheus'
     scrape_interval: 15s
     static_configs:
-      - targets: ['localhost:8000']
+      - targets: ['pingfilterapi-filterapi-1:8000']
