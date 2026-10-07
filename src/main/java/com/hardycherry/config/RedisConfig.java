@@ -6,10 +6,12 @@ import io.lettuce.core.api.sync.RedisCommands;
 import io.lettuce.core.support.http.HttpClient;
 import io.lettuce.core.support.http.HttpClientResources;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@ConditionalOnExpression("'${redis.enabled}' == 'true'")
 public class RedisConfig {
 
     @Value("${redis.password:admin}")
